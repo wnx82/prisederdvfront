@@ -1,3 +1,4 @@
+//http-server . -p 8080
 const app = {
     defaultPage: 'office',
     templates: new Map(),
