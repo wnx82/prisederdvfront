@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "coucou": "http-server . -p 7700 -c-1",
+    "start": "gulp dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -11,6 +13,14 @@
   "license": "ISC",
   "dependencies": {
     "bootstrap": "^5.2.3",
+    "browser-sync": "^2.27.11",
+    "gulp": "^4.0.2",
+    "gulp-concat": "^2.6.1",
     "jquery": "^3.6.1"
+  },
+  "devDependencies": {
+    "gulp-clean-css": "^4.3.0",
+    "gulp-minify": "^3.1.0",
+    "gulp-rev": "^10.0.0"
   }
 }
