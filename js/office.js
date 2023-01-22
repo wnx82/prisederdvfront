@@ -12,25 +12,28 @@ office.init = async function () {
     return [];
   });
 
-  office.renderTable();
+  office.renderList();
 };
 
-office.renderTable = () => {
+office.renderList = () => {
   let content = "";
   office.data.forEach((e, index) => {
     content += `
-        <tr>
-            <td>${e.id}</td>
-            <td>${e.name}</td>
-            <td>
-                <button class="btn btn-primary" onclick="office.edit(${index})">M</button>
-                <button class="btn btn-danger" onclick="office.remove(${index})">S</button>
-            </td>
-        </tr>
-        `;
+            <div class="col-4 mt-4">
+                <div class="card">
+                    <img src="images/desktop.png" class="mt-2 desktop-img card-img-top">
+                    <div class="card-body">
+                    <h5 class="card-title">${e.name}</h5>
+                    <p class="card-text">Ici description du bureau</p>
+                    <a href="#" onclick="office.goDetail(event, '${e.id}')" class="btn btn-primary">Consulter le bureau</a>
+                    </div>
+                </div>
+            </div>
+            `;
   });
-
-  office.tableContent.innerHTML = content;
+  // onclick="office.edit(${index})"
+  // onclick="office.remove(${index})"
+  office.containerList.innerHTML = content;
 };
 
 office.toggleForm = () => {
@@ -72,7 +75,7 @@ office.save = async (event) => {
     } else {
       office.data.push(officeSaved);
     }
-    office.renderTable();
+    office.renderList();
     office.toggleForm();
     alert(successMessage);
   } catch (e) {
@@ -116,7 +119,7 @@ office.remove = async (index) => {
         url: `${app.api}/office/${record.id}`,
       });
       office.data.splice(index, 1);
-      office.renderTable();
+      office.renderList();
     } catch (e) {
       alert("Impossible de supprimer ce bureau !");
     }
@@ -132,4 +135,10 @@ office.getAll = () => {
   });
 };
 
+office.get = (id) => {
+  return $.ajax({
+    type: "GET",
+    url: `${app.api}/office/${id}`,
+  });
+};
 app.controllers.office = office;

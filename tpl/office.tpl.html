@@ -4,18 +4,17 @@
   <div class="col-12">
     <form>
       <input type="hidden" class="form-control" name="id">
-      <div class="form-group">
-        <label for="name">Nom du bureau</label>
+      <div class="mb-3">
+        <label for="name" class="form-label">Nom du bureau</label>
         <input type="text" class="form-control" name="name">
       </div>
-      <button type="button" class="btn btn-danger mt-2" onclick="office.toggleForm()">Annuler</button>
-      <button type="submit" class="btn btn-primary mt-2" onclick="office.save(event)">Envoyer</button>
+      <button type="button" class="btn btn-danger" onclick="office.toggleForm()">Annuler</button>
+      <button type="submit" class="btn btn-primary" onclick="office.save(event)">Envoyer</button>
     </form>
   </div>
-
 </div>
 
-<div class="row mt-4" id="container-list">
+<div class="row mt-4" id="container-manage">
   <div class="col-12 d-flex flex-row-reverse">
     <button class="btn btn-success" onclick="office.edit()">Créer un bureau</button>
   </div>

@@ -4,6 +4,7 @@ const app = {
   templates: new Map(),
   controllers: {},
   content: document.getElementById("app"),
+  currentId: null,
 };
 
 app.init = function () {
@@ -28,8 +29,11 @@ app.displayTpl = async (tpl) => {
   const _tpl = app.templates.get(tpl);
   app.content.innerHTML = _tpl;
   // INIT controller
-  if (app.controllers[tpl] != null) {
-    app.controllers[tpl].init();
+  const tplCamelCase = tpl.replace(/-([a-z])/g, function (g) {
+    return g[1].toUpperCase();
+  });
+  if (app.controllers[tplCamelCase] != null) {
+    app.controllers[tplCamelCase].init();
   }
 };
 
