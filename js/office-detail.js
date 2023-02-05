@@ -17,11 +17,16 @@ officeDetail.init = async function () {
   officeDetail.dataAvailabilities =
     await app.controllers.officeAvailability.getAll();
 
+  console.log(officeDetail.dataAvailabilities);
   document.querySelector("#card-office-detail .card-title").innerHTML =
     office.name;
 
   //RENDER TABLE
   officeDetail.renderTable();
+};
+
+officeDetail.goToEditOfficeAvailability = () => {
+  console.log("test");
 };
 
 officeDetail.renderTable = () => {

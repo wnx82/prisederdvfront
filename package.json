@@ -12,11 +12,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "animate.css": "^4.1.1",
     "bootstrap": "^5.2.3",
     "browser-sync": "^2.27.11",
     "gulp": "^4.0.2",
     "gulp-concat": "^2.6.1",
-    "jquery": "^3.6.1"
+    "jquery": "^3.6.1",
+    "slick-carousel": "^1.8.1"
   },
   "devDependencies": {
     "gulp-clean-css": "^4.3.0",

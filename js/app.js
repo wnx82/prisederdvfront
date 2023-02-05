@@ -15,6 +15,16 @@ app.init = function () {
 
   this.navigate(this.defaultPage);
   window.dispatchEvent(new HashChangeEvent("hashchange"));
+
+  //carrousel
+  $("#slider").slick({
+    // normal options...
+    infinite: true,
+    autoplay: true,
+    autoplaySpeed: 1000,
+    slidesToShow: 2,
+    slidesToScroll: 2,
+  });
 };
 
 app.navigate = (path) => {

@@ -5,7 +5,7 @@ const office = {
 office.init = async function () {
   // get DOM elements
 
-  office.tableContent = document.querySelector("#container-list table tbody");
+  office.containerList = document.querySelector("#container-list");
 
   office.data = await office.getAll().catch(() => {
     alert("Impossible de récupérer les bureaux");
@@ -38,55 +38,47 @@ office.renderList = () => {
 
 office.toggleForm = () => {
   $("#office-form form input").val("");
-  $("#container-list, #office-form").toggle();
+  $("#container-list, #container-manage, #office-form").toggle();
 };
 
 office.save = async (event) => {
   event.preventDefault();
   const id = $('input[name="id"]').val();
   const name = $('input[name="name"]').val();
-  if (!name.trim()) {
+  if (name.trim().length === 0) {
     alert("Tous les champs sont obligatoires !!!");
     return;
   }
 
   const record = office.data.find((d) => d.id == id);
-  let url, type, successMessage, errorMessage;
-  if (record) {
-    url = `${app.api}/office/${record.id}`;
-    type = "PUT";
-    successMessage = "Bureau modifié avec succès";
-    errorMessage = "Impossible de modifier ce bureau";
-  } else {
-    url = `${app.api}/office`;
-    type = "POST";
-    successMessage = "Bureau ajouté avec succès";
-    errorMessage = "Impossible d'ajouter ce bureau";
-  }
-
+  // EDITION
   try {
-    const officeSaved = await $.ajax({
-      type,
-      url,
-      data: { name },
-    });
     if (record) {
+      const officeSaved = await $.ajax({
+        type: "PUT",
+        url: `${app.api}/office/${record.id}`,
+        data: { name },
+      });
       record.name = officeSaved.name;
-    } else {
+    }
+    // AJOUT
+    else {
+      const officeSaved = await $.ajax({
+        type: "POST",
+        url: `${app.api}/office`,
+        data: { name },
+      });
       office.data.push(officeSaved);
     }
+
     office.renderList();
     office.toggleForm();
-    alert(successMessage);
   } catch (e) {
-    alert(errorMessage);
-  }
-};
-
-office.edit = (index) => {
-  office.toggleForm();
-  if (index !== undefined) {
-    office.fillForm(index);
+    alert(
+      record
+        ? "Impossible de modifier ce bureau"
+        : "Impossible d'ajouter ce bureau"
+    );
   }
 };
 
@@ -105,14 +97,18 @@ office.fillForm = (index) => {
   }
 };
 
+office.goDetail = (event, id) => {
+  event.preventDefault();
+  app.currentId = id;
+  app.navigate("office-detail");
+};
+
 office.remove = async (index) => {
   const record = office.data[index];
   if (
     record != null &&
     confirm(`Voulez-vous vraiment supprimer ce bureau: ${record.name} ?`)
   ) {
-    // Afficher le loader
-    $(".lds-roller").show();
     try {
       await $.ajax({
         type: "DELETE",
@@ -123,8 +119,6 @@ office.remove = async (index) => {
     } catch (e) {
       alert("Impossible de supprimer ce bureau !");
     }
-    // Cacher le loader
-    $(".lds-roller").hide();
   }
 };
 
@@ -141,4 +135,5 @@ office.get = (id) => {
     url: `${app.api}/office/${id}`,
   });
 };
+
 app.controllers.office = office;
