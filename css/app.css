@@ -6,13 +6,19 @@
     width: 30%
 }
 
-#container-list .card, #card-office-detail {
+#container-list .card,
+#card-office-detail {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-#officeId{
+#officeId {
     font-size: 20px;
     font-weight: bold;
+}
+
+.modal-body,
+.modal-footer {
+    background: #fff;
 }
